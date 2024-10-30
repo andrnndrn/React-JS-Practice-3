@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function StudentDetail({ toggleModal }) {
+export default function StudentDetail({ toggleModal, student }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -16,16 +16,19 @@ export default function StudentDetail({ toggleModal }) {
         </div>
         <div className="modal-body">
           <p>
-            <strong>Name:</strong> Andrean Nurdiana
+            <strong>Name:</strong> {student.name}
           </p>
           <p>
-            <strong>NIM:</strong> 1185030021
+            <strong>Birth Date:</strong> {student.birthDate}
           </p>
           <p>
-            <strong>Address:</strong> Jl. Kebon Jeruk
+            <strong>NIM:</strong> {student.nim}
           </p>
           <p>
-            <strong>Guardian Name:</strong> Bidru
+            <strong>Address:</strong> {student.address}
+          </p>
+          <p>
+            <strong>Guardian Name:</strong> {student.guardianName}
           </p>
         </div>
       </div>

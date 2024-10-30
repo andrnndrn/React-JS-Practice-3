@@ -4,6 +4,8 @@ export default function StudentTable({
   toggleModalForm,
   toggleModalDetail,
   students,
+  handleEditStudent,
+  handleDeleteStudent,
 }) {
   return (
     <div className="table-responsive">
@@ -13,7 +15,7 @@ export default function StudentTable({
           <tr>
             <th className="px-3" scope="col" colSpan="4">
               <button
-                onClick={() => toggleModalForm (false)}
+                onClick={() => toggleModalForm(false)}
                 className="btn btn-primary btn-sm float-end fw-bold"
               >
                 <i className="bi bi-plus-circle"></i> Add New
@@ -28,20 +30,26 @@ export default function StudentTable({
           </tr>
         </thead>
         <tbody>
-          {students.map((students, index) => (
+          {students.map((student, index) => (
             <tr key={index}>
-                  <th scope="row">{index + 1 }</th>
-              <td>{students.name}</td>
-              <td>{students.nim}</td>
+              <th scope="row">{index + 1}</th>
+              <td>{student.name}</td>
+              <td>{student.nim}</td>
               <td>
-                <button className="btn btn-outline-danger btn-sm float-end">
+                <button
+                  onClick={() => handleDeleteStudent(index)}
+                  className="btn btn-outline-danger btn-sm float-end"
+                >
                   <i className="bi bi-trash"></i>
                 </button>
-                <button onClick={() => toggleModalForm(true)} className="btn btn-outline-warning btn-sm mx-2 float-end">
+                <button
+                  onClick={() => handleEditStudent(student, index)}
+                  className="btn btn-outline-warning btn-sm mx-2 float-end"
+                >
                   <i className="bi bi-pencil"></i>
                 </button>
                 <button
-                  onClick={toggleModalDetail}
+                  onClick={() => toggleModalDetail(student)}
                   className="btn btn-outline-primary btn-sm float-end"
                 >
                   <i className="bi bi-info-circle"></i>

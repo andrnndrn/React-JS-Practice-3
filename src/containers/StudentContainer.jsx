@@ -13,6 +13,7 @@ export default class StudentContainer extends Component {
     students: [
       {
         name: "Andrean Nurdiana",
+        birthDate: "19-02-1999",
         nim: "1185030021",
         address: "Jl. Kebon Jeruk",
         guardianName: "Bidru",
@@ -49,47 +50,67 @@ export default class StudentContainer extends Component {
       editedStudent: index,
     });
   };
+
   toggleModalDetail = () => {
     this.setState({ modalDetail: !this.state.modalDetail });
   };
 
-  handleAddOrUpdateeStudent = () => {
-    const currentStudent = this.state;
+  handleDeleteStudent = (index) => {
+    const data = this.state.students;
+    const newStudents = data.slice(0, index).concat(data.slice(index + 1));
+    this.setState((prevState) => ({
+      students: newStudents,
+    }));
+  };
+
+  handleInfoStudent = (student) => {
+    this.setState({
+      currentStudent: student,
+    });
+    this.toggleModalDetail();
+  };
+  handleAddOrUpdateStudent = () => {
+    const { currentStudent, isEdit } = this.state;
 
     if (isEdit) {
       const index = this.state.editedStudent;
       const updateStudent = [...this.state.students];
-      updateStudent[index] = currentStudent.currentStudent;
-      this.setState({ students: updateStudent });
+      updateStudent[index] = currentStudent;
+      this.setState({
+        students: updateStudent,
+      });
     } else {
       this.setState((prevState) => ({
         students: [...prevState.students, currentStudent],
       }));
-      this.setState({
-        currentStudent: {
-          name: "",
-          birthDate: "",
-          nim: "",
-          address: "",
-          guardianName: "",
-        },
-      });
-      this.toggleModalForm(this.state.isEdit);
     }
+    this.setState({
+      currentStudent: {
+        name: "",
+        birthDate: "",
+        nim: "",
+        address: "",
+        guardianName: "",
+      },
+    });
+    this.toggleModalForm(this.state.isEdit);
   };
+
   render() {
     return (
       <>
         <StudentTable
           students={this.state.students}
+          handleEditStudent={this.handleEditStudent}
           toggleModalForm={this.toggleModalForm}
-          toggleModalDetail={this.toggleModalDetail}
+          toggleModalDetail={this.handleInfoStudent}
+          handleDeleteStudent={this.handleDeleteStudent}
         />
 
         {this.state.modalForm && (
           <StudentForm
             isEdit={this.state.isEdit}
-            onSubmit={this.handleAddOrUpdateeStudent}
+            onSubmit={this.handleAddOrUpdateStudent}
             onChange={this.handleInputChange}
             toggleModal={this.toggleModalForm}
             student={this.state.currentStudent}
@@ -97,7 +118,10 @@ export default class StudentContainer extends Component {
         )}
 
         {this.state.modalDetail && (
-          <StudentDetail toggleModal={this.toggleModalDetail} />
+          <StudentDetail
+            toggleModal={this.toggleModalDetail}
+            student={this.state.currentStudent}
+          />
         )}
       </>
     );

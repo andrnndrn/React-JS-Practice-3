@@ -11,7 +11,9 @@ export default function StudentForm({
     <div className="modal-overlay">
       <div className="modal-content">
         <div className="modal-header">
-          <h5 className="modal-title">Form New Student</h5>
+          <h5 className="modal-title">
+            {isEdit ? "Edit Student" : "Form New Student"}
+          </h5>
           <button
             type="button"
             className="btn-close"
@@ -91,17 +93,18 @@ export default function StudentForm({
         </div>
         <div className="modal-footer mt-5">
           {isEdit ? (
-            <button type="button" className="btn btn-primary">
-              <i className="bi bi-save"></i> Update
+            <button
+              type="button"
+              className="btn btn-warning"
+              onClick={onSubmit}
+            >
+              <i className="bi bi-pencil-square"></i> Update
             </button>
           ) : (
-            <button type="button" className="btn btn-primary">
+            <button type="button" className="btn btn-primary" onClick={onSubmit}>
               <i className="bi bi-save"></i> Submit
             </button>
           )}
-          <button type="button" className="btn btn-primary">
-            <i className="bi bi-save"></i> Submit
-          </button>
         </div>
       </div>
     </div>
